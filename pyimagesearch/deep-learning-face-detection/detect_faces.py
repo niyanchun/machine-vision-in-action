@@ -11,8 +11,8 @@ ap.add_argument("-i", "--image", type=str, default="./she.jpg", help="path to im
 ap.add_argument("-c", "--confidence", type=float, default=0.5, help="minimum probability to filter weak detections")
 args = vars(ap.parse_args())
 
-PROTOTXT_FILE = "./deploy.prototxt.txt"
-MODEL_FILE = "./res10_300x300_ssd_iter_140000.caffemodel"
+PROTOTXT_FILE = "deploy.prototxt.txt"
+MODEL_FILE = "res10_300x300_ssd_iter_140000.caffemodel"
 
 # load our serialized model from disk
 print("loading our serialized model from disk...")

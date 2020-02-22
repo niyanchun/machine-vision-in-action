@@ -6,8 +6,8 @@ import imutils
 import numpy as np
 from imutils.video import VideoStream
 
-PROTOTXT_FILE = "./deploy.prototxt.txt"
-MODEL_FILE = "./res10_300x300_ssd_iter_140000.caffemodel"
+PROTOTXT_FILE = "deploy.prototxt.txt"
+MODEL_FILE = "res10_300x300_ssd_iter_140000.caffemodel"
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-c", "--confidence", type=float, default=0.5, help="minimum probability to filter weak detections")
@@ -20,10 +20,12 @@ net = cv2.dnn.readNetFromCaffe(PROTOTXT_FILE, MODEL_FILE)
 
 # initialize the video stream and allow the camera sensor to warm up
 if args.get("video", None) is None:
+    useCamera = True
     print("no input video, so start the camera video stream...")
     vs = VideoStream(src=0, resolution=(640, 480)).start()
     time.sleep(2.0)
 else:
+    useCamera = False
     vs = cv2.VideoCapture(args["video"])
 
 # loop over the frames from the video stream
@@ -31,6 +33,7 @@ while True:
     # grab the frame from the threaded video stream and resize it
     # to have a maximum width of 400 pixels
     frame = vs.read()
+    frame = frame if useCamera else frame[1]
     frame = imutils.resize(frame, width=600)
     # grab the frame dimensions and convert it to a blob
     (h, w) = frame.shape[:2]
