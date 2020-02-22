@@ -4,5 +4,10 @@ Collect machine vision action projects from Internet.
 
 ## Project List
 
-- deep-learing-face-detection
+- deep-learning-face-detection
 - ball-tracking
+
+
+## Some awesome resources
+
+- [pyimagesearch](https://www.pyimagesearch.com/)
