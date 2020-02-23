@@ -7,15 +7,18 @@ import imutils
 import numpy as np
 from imutils.video import VideoStream
 
+# 命令行参数
 ap = argparse.ArgumentParser()
 ap.add_argument("-v", "--video", help="path to video")
 ap.add_argument("-b", "--buffer", type=int, default=64, help="max buffer size")
 args = vars(ap.parse_args())
 
+# 绿色球的HSV色域空间范围
 greenLower = (29, 86, 6)
 greenUpper = (64, 255, 255)
 pts = deque(maxlen=args["buffer"])
 
+# 判断是读入的视频文件，还是摄像头实时采集的，这里作区分是因为两种情况下后面的有些操作是有区别的
 if args.get("video", None) is None:
     useCamera = True
     print("video is none, use camera...")
@@ -27,10 +30,10 @@ else:
 
 while True:
     frame = vs.read()
+    # 摄像头返回的数据格式为(帧数据)，而从视频抓取的格式为(grabbed, 帧数据)，grabbed表示是否读到了数据
     frame = frame if useCamera else frame[1]
 
-    # if we are viewing a video and we did not grab a frame,
-    # then we have reached the end of the video
+    # 对于从视频读取的情况，frame为None表示数据读完了
     if frame is None:
         break
 
@@ -38,6 +41,7 @@ while True:
     frame = imutils.resize(frame, width=600)
     # blur the frame to reduce high frequency noise, and allow
     # us to focus on the structural objects inside the frame
+    # 通过高斯滤波去除掉一些高频噪声，使得重要的数据更加突出
     blurred = cv2.GaussianBlur(frame, (11, 11), 0)
     # convert frame to HSV color space
     hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
@@ -53,7 +57,7 @@ while True:
     mask = cv2.erode(mask, None, iterations=2)
     mask = cv2.dilate(mask, None, iterations=2)
 
-    # find contours(i.e. outline) in the mask and initialize the current (x,y) center of the ball
+    # 寻找轮廓，不同opencv的版本cv2.findContours返回格式有区别，所以调用了一下imutils.grab_contours做了一些兼容性处理
     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
     center = None
