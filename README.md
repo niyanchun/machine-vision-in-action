@@ -8,6 +8,11 @@ Collect machine vision action projects from Internet.
 - ball-tracking
 
 
-## Some awesome resources
+## Awesome posts
+
+- - [Modern Face Recognition with Deep Learning](https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78)
+
+
+## Awesome Website
 
 - [pyimagesearch](https://www.pyimagesearch.com/)
