@@ -30,3 +30,5 @@ while True:
     k = cv2.waitKey(1) & 0xFF
     if k == ord("q"):
         break
+
+cv2.destroyAllWindows()
