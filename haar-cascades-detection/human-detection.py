@@ -24,6 +24,8 @@ while True:
         y = y - 10 if y - 10 > 10 else y + 10
         cv2.putText(frame, "eye", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 1)
 
+    # 滤镜不能少...
+    frame = cv2.bilateralFilter(frame, 0, 20, 5)
     cv2.imshow("preview", frame)
     k = cv2.waitKey(1) & 0xFF
     if k == ord("q"):
