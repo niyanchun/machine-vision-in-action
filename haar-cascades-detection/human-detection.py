@@ -15,10 +15,15 @@ while True:
 
     for (x, y, w, h) in rects_face:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        y = y - 10 if y - 10 > 10 else y + 10
+        cv2.putText(frame, "face", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 1)
 
     rects_eye = eye_cascade.detectMultiScale(gray_frame)
     for (x, y, w, h) in rects_eye:
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        y = y - 10 if y - 10 > 10 else y + 10
+        cv2.putText(frame, "eye", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 1)
+
     cv2.imshow("preview", frame)
     k = cv2.waitKey(1) & 0xFF
     if k == ord("q"):
